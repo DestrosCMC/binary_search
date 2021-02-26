@@ -137,36 +137,87 @@ def count_repeats(xs, x):
     >>> count_repeats([3, 2, 1], 4)
     0
     '''
+
+    if not xs:
+        return 0
+
+    high = len(xs) - 1
+    low = 0
+
+    def first(low, high):
+        mid = (low + high) // 2
+        if xs[mid] == x:
+            if mid == 0 or xs[mid - 1] > x:
+                return mid
+            else:
+                return first(low, mid - 1)
+
+        if low == high:
+            return None
+
+        if x > xs[mid]:
+            return first(low, mid - 1)
+
+        if x < xs[mid]:
+            return first(mid + 1, high)
+
+    def last(low, high):
+        mid = (low + high) // 2
+        if xs[mid] == x:
+            if mid == (len(xs) - 1) or x > xs[mid + 1]:
+                return mid
+            else:
+                return last(mid + 1, high)
+
+        if low == high:
+            return None
+
+        if xs[mid] > x:
+            return last(mid + 1, high)
+
+        if xs[mid] < x:
+            return last(low, mid - 1)
+
+    first_pos = first(low, high)
+    last_pos = last(low, high)
+
+    if first_pos is None or last_pos is None:
+        return 0
+    else:
+        return last_pos - first_pos + 1
+
+    '''
     high = len(xs)
     low = 0
     n = len(xs)
-    xs.reverse()
+    #xs.reverse()
 
     if x not in xs:
         return 0
 
-    def first(xs, low, high, x, n):
+    def last(xs, low, high, x, n):
         if high >= low:
             mid = low + (high - low) // 2
-            if ((mid == 0 or x > xs[mid - 1]) and xs[mid] == x):
-                return mid
-            elif (x > xs[mid]):
-                return first(xs, (mid + 1), high, x, n)
-            else:
-                return first(xs, low, (mid - 1), x, n)
+        if ((mid == 0 or x > xs[mid - 1]) and xs[mid] == x):
+            return mid
+        elif (x > xs[mid]):
+            return first(xs, (mid + 1), high, x, n)
+        else:
+            return first(xs, low, (mid - 1), x, n)
         return -1
 
-    def last(xs, low, high, x, n):
+    def first(xs, low, high, x, n):
         if (high >= low):
             mid = low + (high - low) // 2
-            if ((mid == n - 1 or x < xs[mid + 1]) and xs[mid] == x):
-                return mid
-            elif (x < xs[mid]):
-                return last(xs, low, (mid - 1), x, n)
-            else:
-                return last(xs, (mid + 1), high, x, n)
+        if ((mid == n - 1 or x < xs[mid + 1]) and xs[mid] == x):
+            return mid
+        elif (x < xs[mid]):
+            return last(xs, low, (mid - 1), x, n)
+        else:
+            return last(xs, (mid + 1), high, x, n)
         return -1
     return last(xs, low, high, x, n) - first(xs, low, high, x, n) + 1
+    '''
 
 
 def argmin(f, lo, hi, epsilon=1e-3):
