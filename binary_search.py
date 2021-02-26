@@ -147,7 +147,7 @@ def count_repeats(xs, x):
 
     def first(xs, low, high, x, n):
         if high >= low:
-            mid = low + (high-low) // 2
+            mid = low + (high - low) // 2
             if ((mid == 0 or x > xs[mid - 1]) and xs[mid] == x):
                 return mid
             elif (x > xs[mid]):
@@ -159,10 +159,10 @@ def count_repeats(xs, x):
     def last(xs, low, high, x, n):
         if (high >= low):
             mid = low + (high - low) // 2
-            if ((mid == n - 1 or x < xs[mid+1]) and xs[mid] == x):
+            if ((mid == n - 1 or x < xs[mid + 1]) and xs[mid] == x):
                 return mid
             elif (x < xs[mid]):
-                return last(xs, low, (mid-1), x, n)
+                return last(xs, low, (mid - 1), x, n)
             else:
                 return last(xs, (mid + 1), high, x, n)
         return -1
@@ -219,7 +219,7 @@ def argmin(f, lo, hi, epsilon=1e-3):
             return hi
     '''
 
-    m1 = lo + (hi - lo)/3
+    m1 = lo + (hi - lo) / 3
     m2 = hi - (hi - lo) / 3
     if hi - lo < epsilon:
         return hi
